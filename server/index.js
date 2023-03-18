@@ -3,6 +3,9 @@ const app= express()
 const cors=require('cors')
 const mongoose=require('mongoose')
 const User=require('./models/user.model')
+const borders=require('./models/borders.model')
+const carControls=require('./models/carControls.model')
+const truckControls=require('./models/truckControls')
 const jwt =require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
@@ -52,53 +55,239 @@ app.post('/api/login',async (req,res)=>{
         }
         else{
             res.json({status: 'error', user: false})
-        }
-        
-        
-    
-    
+        } 
 })
-
-/*app.get('/api/quote',async (req,res)=>{
-    
-    const token = req.headers['x-access-token']
+app.delete('/api/login',async(req,res)=>{
     try{
-        const decoded = jwt.verify(token, 'secret123')
-        const email = decoded.email
-        const user = await User.findOne({ email: email })
-
-        return res.json({status: 'ok',quote: user.quote})
-    }catch{
-        console.log(error)
-        res.json({ status: 'error', error: 'invalid token' })
+        const user=await User.deleteOne({email:req.body.email})
+        return res.json({status: 'ok',message:'User deleted'})
+    }catch (err){
+        console.log(err)
+        res.json({status: err.status,error: err.message})
     }
-   
-    
-    
-    
-    
+})    
 
 
-})
-
-app.post('/api/quote',async (req,res)=>{
-    
-    const token = req.headers['x-access-token']
+app.post('/api/borders',async (req,res)=>{
+    console.log(req.body)
     try{
-        const decoded = jwt.verify(token, 'secret123')
-        const email = decoded.email
-        const user = await User.updateOne(
-            { email: email },
-            { $set: {quote: req.body.quote}
+        const border=await borders.create({
+            name:req.body.name,
+            latitude:req.body.latitude, 
+            longitude:req.body.longitude, 
+            waitTime:req.body.waitTime,
+            areCarsAllowed:req.body.areCarsAllowed,
+            areTrucksAllowed:req.body.areTrucksAllowed,
         })
-
-        return res.json({status: 'ok'})
-    }catch(error){
-        console.log(error)
-        res.json({ status: 'error', error: 'invalid token' })
+        res.json({status: 'ok'})
+        
+    } catch (err){
+        console.log(err)
+        res.json({status: err.status,error: err.message})
     }
-})*/
+    
+})
 
+app.get('/api/borders',async(req,res)=>{
+    try{
+        const border = await borders.find()
+        return res.json({status: 'ok',data: border})
+    }catch (err){
+        console.log(err)
+        res.json({status:err.status,error: err.message})
+    }
+})
+
+app.get('/api/borders/name',async(req,res)=>{
+    try{
+        const border = await borders.findOne({name:req.body.name})
+        return res.json({status: 'ok',data:border})
+    }catch (err){
+        console.log(err)
+        res.json({status:err.status,error: err.message})
+    }
+})
+
+app.put('/api/borders',async(req,res)=>{
+    try{
+        const border = await borders.updateOne({_id:req.body._id},
+            {   
+                name:req.body.name,
+                latitude:req.body.latitude, 
+                longitude:req.body.longitude, 
+                waitTime:req.body.waitTime,
+                areCarsAllowed:req.body.areCarsAllowed,
+                areTrucksAllowed:req.body.areTrucksAllowed,
+            })
+        return res.json({status:'ok',data: border})
+    }catch (err){
+        console.log(err)
+        res.json({status:err.status,error: err.message})
+    }
+})
+app.delete('/api/borders',async(req,res)=>{
+    try{
+        const border = await borders.deleteOne({name:req.body.name})
+        return res.json({status:'ok',message:'Border deleted'})
+    }catch (err){
+        console.log(err)
+        res.json({status:err.status,error: err.message})
+    }
+})
+
+app.post('/api/carControls',async (req,res)=>{
+    console.log(req.body)
+    try{
+        const carControl=await carControls.create({
+            name:req.body.name,
+            licensePlate:req.body.licensePlate,
+            vinNumber:req.body.vinNumber,
+            vehicleModel:req.body.vehicleModel,
+            vehicleYear:req.body.vehicleYear,
+            date:req.body.date,
+            problems:req.body.problems,
+            problemDescription:req.body.problemDescription
+        })
+        res.json({status: 'ok'})
+        
+    } catch (err){
+        console.log(err)
+        res.json({status: err.status,error: err.message})
+    }
+    
+})
+
+app.get('/api/carControls',async(req,res)=>{
+    try{
+        const carControl = await carControls.find()
+        return res.json({status: 'ok',data: carControl})
+    }catch (err){
+        console.log(err)
+        res.json({status:err.status,error: err.message})
+    }
+})
+
+app.get('/api/carControlsByLicensePlate',async(req,res)=>{
+    try{
+        const carControl = await carControls.findOne({licensePlate:req.body.licensePlate})
+        return res.json({status: 'ok',data: carControl})
+    }catch (err){
+        console.log(err)
+        res.json({status:err.status,error: err.message})
+    }
+})
+app.put('/api/carControls',async(req,res)=>{
+    try{
+        const carControl = await carControls.updateOne({_id:req.body._id},
+            {   
+                name:req.body.name,
+                licensePlate:req.body.licensePlate,
+                vinNumber:req.body.vinNumber,
+                vehicleModel:req.body.vehicleModel,
+                vehicleYear:req.body.vehicleYear,
+                date:req.body.date,
+                problems:req.body.problems,
+                problemDescription:req.body.problemDescription
+            })
+        return res.json({status:'ok',data: carControl})
+    }catch (err){
+        console.log(err)
+        res.json({status:err.status,error: err.message})
+    }
+})
+
+app.delete('/api/carControls',async(req,res)=>{
+    try{
+        const carControl = await carControls.deleteOne({licensePlate:req.body.licensePlate})
+        return res.json({status:'ok',message:'Control deleted'})
+    }catch (err){
+        console.log(err)
+        res.json({status:err.status,error: err.message})
+    }
+})
+
+
+
+
+
+app.post('/api/truckControls',async (req,res)=>{
+    console.log(req.body)
+    try{
+        const truckControl=await truckControls.create({
+            name:req.body.name,
+                licensePlate:req.body.licensePlate,
+                vinNumber:req.body.vinNumber,
+                vehicleModel:req.body.vehicleModel,
+                vehicleYear:req.body.vehicleYear,
+                date:req.body.date,
+                weight:req.body.weight,
+                height:req.body.height,
+                width:req.body.width,
+                length:req.body.length,
+                problems:req.body.problems,
+                problemDescription:req.body.problemDescription
+        })
+        res.json({status: 'ok'})
+        
+    } catch (err){
+        console.log(err)
+        res.json({status: err.status,error: err.message})
+    }
+    
+})
+
+app.get('/api/truckControls',async(req,res)=>{
+    try{
+        const truckControl = await truckControls.find()
+        return res.json({status: 'ok',data: truckControl})
+    }catch (err){
+        console.log(err)
+        res.json({status:err.status,error: err.message})
+    }
+})
+
+app.get('/api/truckControlsByLicensePlate',async(req,res)=>{
+    try{
+        const truckControl = await truckControls.findOne({licensePlate:req.body.licensePlate})
+        return res.json({status: 'ok',data: truckControl})
+    }catch (err){
+        console.log(err)
+        res.json({status:err.status,error: err.message})
+    }
+})
+app.put('/api/truckControls',async(req,res)=>{
+    try{
+        const truckControl = await truckControls.updateOne({_id:req.body._id},
+            {   
+                name:req.body.name,
+                licensePlate:req.body.licensePlate,
+                vinNumber:req.body.vinNumber,
+                vehicleModel:req.body.vehicleModel,
+                vehicleYear:req.body.vehicleYear,
+                date:req.body.date,
+                weight:req.body.weight,
+                height:req.body.height,
+                width:req.body.width,
+                length:req.body.length,
+                problems:req.body.problems,
+                problemDescription:req.body.problemDescription
+            })
+        return res.json({status:'ok',data: truckControl})
+    }catch (err){
+        console.log(err)
+        res.json({status:err.status,error: err.message})
+    }
+})
+
+app.delete('/api/truckControls',async(req,res)=>{
+    try{
+        const truckControl = await truckControls.deleteOne({licensePlate:req.body.licensePlate})
+        return res.json({status:'ok',message:'Control deleted'})
+    }catch (err){
+        console.log(err)
+        res.json({status:err.status,error: err.message})
+    }
+})
 app.listen(1337,()=>{
     console.log('Server started on 1337')
 })
