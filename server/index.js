@@ -21,7 +21,9 @@ app.post('/api/register',async (req,res)=>{
         const user=await User.create({
             name: req.body.name,
             email: req.body.email,
+            badgeNumber: req.body.badgeNumber,
             password: newPassword,
+            isAdmin: req.body.isAdmin
         })
         res.json({status: 'ok'})
         
@@ -144,7 +146,6 @@ app.post('/api/carControls',async (req,res)=>{
             vinNumber:req.body.vinNumber,
             vehicleModel:req.body.vehicleModel,
             vehicleYear:req.body.vehicleYear,
-            date:req.body.date,
             problems:req.body.problems,
             problemDescription:req.body.problemDescription
         })
@@ -219,7 +220,6 @@ app.post('/api/truckControls',async (req,res)=>{
                 vinNumber:req.body.vinNumber,
                 vehicleModel:req.body.vehicleModel,
                 vehicleYear:req.body.vehicleYear,
-                date:req.body.date,
                 weight:req.body.weight,
                 height:req.body.height,
                 width:req.body.width,

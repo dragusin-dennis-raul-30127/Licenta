@@ -7,7 +7,7 @@ const carControls = new mongoose.Schema(
     vinNumber:{ type: String,required: true,unique: true},
     vehicleModel:{ type: String,required: true },
     vehicleYear:{ type: String,required: true },
-    date:{type: Date,required: true},
+    date:{type: Date,required: true,default: Date.now()},
     problems:{type: Boolean,required: true},
     problemDescription:{type: String,required: false},    
     },

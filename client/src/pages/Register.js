@@ -7,7 +7,9 @@ function App() {
   const history = useNavigate()
   const [name, setName]=useState('')
   const [email, setEmail]=useState('')
+  const [badgeNumber, setBadgeNumber]=useState('')
   const [password, setPassword]=useState('')
+  const [isAdmin, setIsAdmin]=useState(false)
 
   async function registerUser(event){
     event.preventDefault()
@@ -19,7 +21,9 @@ function App() {
       body: JSON.stringify({
         name,
         email,
+        badgeNumber,
         password,
+        isAdmin
       }),
     })
 
@@ -50,10 +54,25 @@ function App() {
         />
         <br/>
         <input 
+          value={badgeNumber}
+          onChange={(e)=>setBadgeNumber(e.target.value)}
+          type ="text" 
+          placeholder="Badge Number"
+        />
+        <br/>
+        <input 
           value={password}
           onChange={(e)=>setPassword(e.target.value)}
           type ="text" 
           placeholder="Password"
+        />
+        <br />
+        <span>Admin</span>
+        <input 
+          value={isAdmin}
+          onChange={(e)=>setIsAdmin(e.target.value)}
+          type ="checkBox" 
+          placeholder="Admin"
         />
         <br />
         <input type="submit" value="Register"/>
