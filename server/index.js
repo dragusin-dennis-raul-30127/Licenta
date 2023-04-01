@@ -50,6 +50,8 @@ app.post('/api/login',async (req,res)=>{
                 {
                     name: user.name,
                     email: user.email,
+                    badgeNumber: user.badgeNumber,
+                    isAdmin: user.isAdmin
                 },
                 'secret123'
             )
@@ -139,7 +141,15 @@ app.delete('/api/borders',async(req,res)=>{
 
 app.post('/api/carControls',async (req,res)=>{
     console.log(req.body)
+    const authHeader = req.headers.authorization
+    if(!authHeader){
+        res.send(401,'Unauthorized request')
+    }
+    const token=authHeader.split(' ')[1] 
+    const decoded=jwt.verify(token,'secret123')
     try{
+        
+        
         const carControl=await carControls.create({
             name:req.body.name,
             licensePlate:req.body.licensePlate,

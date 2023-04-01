@@ -2,10 +2,61 @@ import React, { useEffect, useState } from 'react'
 import jwt from 'jsonwebtoken'
 import { useNavigate } from 'react-router-dom'
 import {useMemo} from 'react'
-import {GoogleMap, useLoadScript, Marker} from '@react-google-maps/api'
+import {GoogleMap, useLoadScript, Marker, MarkerF} from '@react-google-maps/api'
+import axios from '../api/axios';
+
+
 
 
 export default function Home(){
+    const [data,setData]=useState([])
+    const [borders,setBorders]=useState([])
+    const navigate = useNavigate()
+    const fetchBorders=async()=>{
+        try{
+            const response = await axios().get("api/borders")
+            setBorders(response.data.data)
+        }
+        catch(error){}
+    }
+
+   useEffect(()=>{
+        fetchBorders()
+   },[])
+
+  
+    useEffect(() => {
+        const token=localStorage.getItem('token')
+        if (token) {
+            const user =jwt.decode(token)
+            if(!user){
+                localStorage.removeItem('token')
+                navigate('/login')
+            } 
+        }
+        else{
+          alert('N ai voie')
+          navigate('/login')
+        }
+        
+    })
+   
+
+   console.log(borders)
+
+   
+   const trucksBorders=borders.filter(border => border.areTrucksAllowed===true)
+   const carsBorders=borders.filter(border => border.areCarsAllowed===true)
+   
+   useEffect(()=>{
+    borders &&
+    setData(borders)
+   },[borders])
+   
+   
+
+   
+
     const {isLoaded}=useLoadScript({
         googleMapsApiKey: "AIzaSyBFodgAyXyjij2e-8p9qsSoHn8m9mnzp5Q",
     })
@@ -13,90 +64,23 @@ export default function Home(){
     if(!isLoaded) {
         return <div>Loading...</div>
     }
-    return <Map />
+    return <div>
+        <button onClick={()=>setData(trucksBorders)}>Trucks</button>
+        <button onClick={()=>setData(carsBorders)}> Cars </button>
+                <Map  data={data}/>
+             </div>
+        
 }
-function Map(){
-    const center = useMemo(() => ({ lat: 46.771210,lng: 23.623635}),[])
+function Map({data}){
+    const center = useMemo(() => ({ lat: 45,lng: 25}),[])
     return (
         <GoogleMap 
-            zoom={10} 
-            center={center} 
-            mapContainerStyle={{width: "100%" , height: "100vh"}}>
-                <Marker position={center} />
+        zoom={7} 
+        center={center} 
+        mapContainerStyle={{width: "100%" , height: "100vh"}}>
+        {data.map(el => <MarkerF key={el._id} position={{lat:el.latitude,lng:el.longitude}} />)}
+               
         </GoogleMap>
     )
 }
 
-/*const Dashboard = () =>{
-    const history = useNavigate()
-    const [quote, setQuote]=useState('')
-    const [tempQuote, setTempQuote]=useState('')
-
-    
-    async function populateQuote(){
-        const req = await fetch('http://localhost:1337/api/quote',{
-            headers: {
-                'x-access-token': localStorage.getItem('token'),
-            },
-        })
-
-        const data = await req.json()
-        if(data.status === 'ok'){
-            setQuote(data.quote)
-        }else{
-            alert(data.error)
-        }
-    }
-    useEffect(() => {
-        const token=localStorage.getItem('token')
-        if (token) {
-            const user =jwt.decode(token)
-            if(!user){
-                localStorage.removeItem('token')
-                history.replace('/login')
-            } else{
-                populateQuote()
-            }
-        }
-    },[])
-
-    async function updateQuote() {
-        
-        const req = await fetch('http://localhost:1337/api/quote',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-access-token': localStorage.getItem('token'),
-            },
-            body: JSON.stringify({
-                quote: tempQuote,
-            }),
-        })
-
-        const data = await req.json()
-        if(data.status === 'ok'){
-            setQuote(tempQuote)
-            setTempQuote('')
-            
-        }else{
-            alert(data.error)
-        }
-    }
-    return(
-    <div>
-        <h1>Your Quote: {quote || 'No quote found'}</h1>
-        <form onSubmit={updateQuote}>
-            <input 
-            type="text"
-            placeholder="Quote"
-            value={tempQuote}
-            onChange={(e) => setTempQuote(e.target.value)}
-            />
-            <input type="submit" value="Update quote" />
-        </form>
-    </div>
-
-    )
-}
-
-export default Dashboard*/

@@ -2,7 +2,7 @@
 
 import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
-
+import jwt from 'jsonwebtoken'
 function App() {
   const navigate = useNavigate()
   const [name, setName]=useState('')
@@ -27,6 +27,7 @@ function App() {
       method: 'POST',
       headers:{
         'Content-Type': 'application/json',
+        'authorization':  `Bearer ${localStorage.getItem('token')}` ,
       },
       body: JSON.stringify({
         name,
@@ -45,12 +46,38 @@ function App() {
     })
 
     const data=await response.json()
-
+    const token=localStorage.getItem('token')
     if(data.status === 'ok') {
       alert('Control entered succesfully')
+      navigate('/dashboard')
+    }
+    else{
+      if(!token){
+        alert('You are not auth')
+      }else{
+        alert('Invalid control')
+      }
     }
     console.log(data)
   }
+
+  useEffect(() => {
+    const token=localStorage.getItem('token')
+    if (token) {
+        const user =jwt.decode(token)
+        if(!user){
+            localStorage.removeItem('token')
+            navigate('/login')
+        } else{
+            enterTruckControl()
+        }
+    }
+    else{
+      alert('N ai voie')
+      navigate('/login')
+    }
+    
+})
 
   return (
     <div>
