@@ -2,6 +2,7 @@ const mongoose=require('mongoose')
 
 const truckControls = new mongoose.Schema(
     {
+    border:{ type: String,required: true },   
     name:{ type: String,required: true },
     licensePlate:{ type: String,required: true ,unique: true},
     vinNumber:{ type: String,required: true,unique: true},

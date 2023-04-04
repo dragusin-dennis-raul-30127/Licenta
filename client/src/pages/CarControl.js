@@ -5,6 +5,7 @@ import {useNavigate} from 'react-router-dom'
 import jwt from 'jsonwebtoken'
 function App() {
   const navigate = useNavigate()
+  const [border,setBorder]=useState('')
   const [name, setName]=useState('')
   const [licensePlate, setLicensePlate]=useState('')
   const [vinNumber, setVinNumber]=useState('')
@@ -29,6 +30,7 @@ function App() {
         'authorization':  `Bearer ${localStorage.getItem('token')}` ,
       },
       body: JSON.stringify({
+        border,
         name,
         licensePlate,
         vinNumber,
@@ -80,6 +82,13 @@ function App() {
     <div>
       <h1>Car Control</h1>
       <form onSubmit={enterCarControl}>
+      <input 
+          value={border}
+          onChange={(e)=>setBorder(e.target.value)}
+          type ="text" 
+          placeholder="Border"
+        />
+        <br/>
         <input 
           value={name}
           onChange={(e)=>setName(e.target.value)}

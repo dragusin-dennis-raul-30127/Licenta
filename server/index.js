@@ -151,6 +151,7 @@ app.post('/api/carControls',async (req,res)=>{
         
         
         const carControl=await carControls.create({
+            border:req.body.border,
             name:req.body.name,
             licensePlate:req.body.licensePlate,
             vinNumber:req.body.vinNumber,
@@ -191,6 +192,7 @@ app.put('/api/carControls',async(req,res)=>{
     try{
         const carControl = await carControls.updateOne({_id:req.body._id},
             {   
+                border: req.body.border,
                 name:req.body.name,
                 licensePlate:req.body.licensePlate,
                 vinNumber:req.body.vinNumber,
@@ -225,7 +227,8 @@ app.post('/api/truckControls',async (req,res)=>{
     console.log(req.body)
     try{
         const truckControl=await truckControls.create({
-            name:req.body.name,
+                border:req.body.border,
+                name:req.body.name,
                 licensePlate:req.body.licensePlate,
                 vinNumber:req.body.vinNumber,
                 vehicleModel:req.body.vehicleModel,
@@ -269,6 +272,7 @@ app.put('/api/truckControls',async(req,res)=>{
     try{
         const truckControl = await truckControls.updateOne({_id:req.body._id},
             {   
+                border: req.body.border,
                 name:req.body.name,
                 licensePlate:req.body.licensePlate,
                 vinNumber:req.body.vinNumber,

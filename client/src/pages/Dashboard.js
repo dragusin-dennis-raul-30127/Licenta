@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import jwt from 'jsonwebtoken'
 import { useNavigate } from 'react-router-dom'
 import {useMemo} from 'react'
-import {GoogleMap, useLoadScript, Marker, MarkerF} from '@react-google-maps/api'
+import {GoogleMap, useLoadScript, Marker, MarkerF,InfoWindow} from '@react-google-maps/api'
 import axios from '../api/axios';
 
 
@@ -73,13 +73,49 @@ export default function Home(){
 }
 function Map({data}){
     const center = useMemo(() => ({ lat: 45,lng: 25}),[])
+    const [selectedElement, setSelectedElement] = useState(null);
+    const [activeMarker, setActiveMarker] = useState(null);
+    const [showInfoWindow, setInfoWindowFlag] = useState(true);
+    const navigate = useNavigate()
     return (
         <GoogleMap 
         zoom={7} 
         center={center} 
         mapContainerStyle={{width: "100%" , height: "100vh"}}>
-        {data.map(el => <MarkerF key={el._id} position={{lat:el.latitude,lng:el.longitude}} />)}
-               
+        
+        {data.map(element => {
+          return (
+            <MarkerF
+              key={element._id}
+              title={element.name}
+              position={{
+                lat: element.latitude,
+                lng: element.longitude,
+              }}
+              
+              onClick={(props, marker) => {
+                setSelectedElement(element);
+                setActiveMarker(marker);
+              }}
+            />
+          );
+        })}
+        {selectedElement ? (
+          <InfoWindow
+            position={{lat:selectedElement.latitude, lng:selectedElement.longitude}}
+            visible={showInfoWindow}
+            marker={activeMarker}
+            onCloseClick={() => {
+              setSelectedElement(null);
+            }}
+          >
+            <div>
+              <h1>{selectedElement.name}</h1>
+              <button onClick={()=>navigate('/truckControls')}>Enter Truck Control</button>
+              <button onClick={()=>navigate('/carControls')}>Enter Car Control</button>
+            </div>
+          </InfoWindow>
+        ) : null}      
         </GoogleMap>
     )
 }
