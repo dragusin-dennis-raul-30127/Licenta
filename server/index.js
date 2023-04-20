@@ -172,6 +172,7 @@ app.post('/api/carControls',async (req,res)=>{
 app.get('/api/carControls',async(req,res)=>{
     try{
         const carControl = await carControls.find()
+        console.log("mere")
         return res.json({status: 'ok',data: carControl})
     }catch (err){
         console.log(err)

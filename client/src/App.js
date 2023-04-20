@@ -5,20 +5,24 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import CarControl from './pages/CarControl'
 import TruckControl from './pages/TruckControl'
+import ViewControls from './pages/ViewControls'
+import ViewTruckControls from './pages/ViewTruckControls'
 
 const App = () =>{
     return (
     <div>
         <BrowserRouter>
         <Routes>
-            <Route path="/login" exact element={<Login/>}/>
+            <Route path="/" exact element={<Login/>}/>
             <Route path="/register" exact element={<Register/>}/>
             <Route path="/dashboard" exact element={<Dashboard/>}/>
             <Route path="/carControls" exact element={<CarControl/>}/>
             <Route path="/truckControls" exact element={<TruckControl/>}/>
+            <Route path="/viewControls" exact element={<ViewControls/>}/>
+            <Route path="/viewTruckControls" exact element={<ViewTruckControls/>}/>
         </Routes>
         </BrowserRouter>
-
+        
 
     </div>
     )

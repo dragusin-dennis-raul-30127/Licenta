@@ -113,6 +113,8 @@ function Map({data}){
               <h1>{selectedElement.name}</h1>
               <button onClick={()=>navigate('/truckControls')}>Enter Truck Control</button>
               <button onClick={()=>navigate('/carControls')}>Enter Car Control</button>
+              <button onClick={()=>navigate('/viewTruckControls')}>View Truck Controls</button>
+              <button onClick={()=>navigate('/viewControls')}>View Car Controls</button>
             </div>
           </InfoWindow>
         ) : null}      
