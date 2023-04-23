@@ -270,6 +270,15 @@ app.get('/api/truckControls',async(req,res)=>{
     }
 })
 
+app.get('/api/truckControls/:border', async (req, res) => {
+    try {
+      const truckControl = await truckControls.find({ border: req.params.border });
+      return res.json({ status: 'ok', data: truckControl });
+    } catch (err) {
+      console.log(err);
+      res.json({ status: err.status, error: err.message });
+    }
+  });
 app.get('/api/truckControlsByLicensePlate',async(req,res)=>{
     try{
         const truckControl = await truckControls.findOne({licensePlate:req.body.licensePlate})

@@ -9,6 +9,7 @@ import ViewControls from './pages/ViewControls'
 import ViewTruckControls from './pages/ViewTruckControls'
 import {Navbar} from './components/Navbar/Navbar'
 import { ViewCarControlByBorder } from './pages/ViewControlsByBorder/ViewControlsByBorder'
+import { ViewTruckControlByBorder } from './pages/ViewTruckControlsByBorder/ViewTruckControlsByBorder'
 
 const App = () =>{
     return (
@@ -24,6 +25,7 @@ const App = () =>{
             <Route path="/viewControls" exact element={<ViewControls/>}/>
             <Route path="/viewControls/:id" exact element={<ViewCarControlByBorder/>}/>
             <Route path="/viewTruckControls" exact element={<ViewTruckControls/>}/>
+            <Route path="/viewTruckControls/:id" exact element={<ViewTruckControlByBorder/>}/>
         </Routes>
         </BrowserRouter>
         
