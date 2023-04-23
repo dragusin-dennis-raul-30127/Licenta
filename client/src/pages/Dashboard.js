@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import jwt from 'jsonwebtoken'
 import { useNavigate } from 'react-router-dom'
 import {useMemo} from 'react'
-import {GoogleMap, useLoadScript, Marker, MarkerF,InfoWindow} from '@react-google-maps/api'
+import {GoogleMap, useLoadScript, Marker, MarkerF,InfoWindowF} from '@react-google-maps/api'
 import axios from '../api/axios';
 
 
@@ -101,7 +101,7 @@ function Map({data}){
           );
         })}
         {selectedElement ? (
-          <InfoWindow
+          <InfoWindowF
             position={{lat:selectedElement.latitude, lng:selectedElement.longitude}}
             visible={showInfoWindow}
             marker={activeMarker}
@@ -114,9 +114,9 @@ function Map({data}){
               <button onClick={()=>navigate('/truckControls')}>Enter Truck Control</button>
               <button onClick={()=>navigate('/carControls')}>Enter Car Control</button>
               <button onClick={()=>navigate('/viewTruckControls')}>View Truck Controls</button>
-              <button onClick={()=>navigate('/viewControls')}>View Car Controls</button>
+              <button onClick={()=>navigate(`/viewControls/${selectedElement._id}`)}>View Car Controls</button>
             </div>
-          </InfoWindow>
+          </InfoWindowF>
         ) : null}      
         </GoogleMap>
     )

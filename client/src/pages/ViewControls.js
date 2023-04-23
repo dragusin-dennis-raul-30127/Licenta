@@ -4,8 +4,8 @@ import axios from '../api/axios';
 
 import { useNavigate } from 'react-router-dom'
 import {useMemo} from 'react'
-import {Table} from '../components/Table'
-import { useTable } from 'react-table';
+import {Table} from '../components/Table/Table'
+
 export default function Home(){
     const [data,setData]=useState([])
     const [carControls,setCarControls]=useState([])
@@ -42,7 +42,6 @@ export default function Home(){
         }
         
     })
-    console.log(carControls)
     
 
     const carControlsData=useMemo(()=> carControls,[carControls]);

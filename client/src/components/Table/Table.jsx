@@ -1,5 +1,5 @@
 import { useTable } from 'react-table';
-
+import './Table.scss'
 export const Table = ({columns: columns, data: data}) => {
     console.log(columns)
     console.log(data)
@@ -9,11 +9,11 @@ export const Table = ({columns: columns, data: data}) => {
 
     return(
         <table {...getTableProps()}>
-                <thead>
+                <thead className="header">
                     {headerGroups.map((headerGroup)=>(
                         <tr {...headerGroup.getHeaderGroupProps()}>
                             {headerGroup.headers.map((column)=>(
-                                <th {...column.getHeaderProps()}>
+                                <th className="cell-details" {...column.getHeaderProps()}>
                                     {column.render("Header")}
                                 </th>
                             ))}
@@ -21,13 +21,13 @@ export const Table = ({columns: columns, data: data}) => {
                     ))}
                    
                 </thead>
-                <tbody {...getTableBodyProps()}>
+                <tbody className="body"{...getTableBodyProps()}>
                     {rows.map((row)=>{
                         prepareRow(row);
                         return(
                             <tr {...row.getRowProps()}>
                                 {row.cells.map((cell)=>(
-                                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                                    <td classname="body-cell-details" style={{padding:"4px"}} {...cell.getCellProps()}>{cell.render("Cell")}</td>
                                 ))}
                             </tr>
                         );

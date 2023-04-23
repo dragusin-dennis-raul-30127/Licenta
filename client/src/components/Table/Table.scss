@@ -1,0 +1,22 @@
+.header{
+    background-color: blueviolet;
+    width:100%;
+    color:white;
+
+    .cell-details{
+        padding:4px;
+    }
+}
+.body{
+    background-color: burlywood;
+    width:100%;
+    color:white;
+
+    .body-cell-details {
+        padding:10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+}

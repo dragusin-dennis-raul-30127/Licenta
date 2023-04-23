@@ -102,15 +102,15 @@ app.get('/api/borders',async(req,res)=>{
     }
 })
 
-app.get('/api/borders/name',async(req,res)=>{
-    try{
-        const border = await borders.findOne({name:req.body.name})
-        return res.json({status: 'ok',data:border})
-    }catch (err){
-        console.log(err)
-        res.json({status:err.status,error: err.message})
+app.get('/api/borders/:id', async (req, res) => {
+    try {
+      const border = await borders.findOne({ _id: req.params.id });
+      return res.json({ status: 'ok', data: border });
+    } catch (err) {
+      console.log(err);
+      res.json({ status: err.status, error: err.message });
     }
-})
+  });
 
 app.put('/api/borders',async(req,res)=>{
     try{
@@ -179,6 +179,16 @@ app.get('/api/carControls',async(req,res)=>{
         res.json({status:err.status,error: err.message})
     }
 })
+
+app.get('/api/carControls/:border', async (req, res) => {
+    try {
+      const carControl = await carControls.find({ border: req.params.border });
+      return res.json({ status: 'ok', data: carControl });
+    } catch (err) {
+      console.log(err);
+      res.json({ status: err.status, error: err.message });
+    }
+  });
 
 app.get('/api/carControlsByLicensePlate',async(req,res)=>{
     try{

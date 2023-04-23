@@ -4,7 +4,7 @@ import axios from '../api/axios';
 
 import { useNavigate } from 'react-router-dom'
 import {useMemo} from 'react'
-import {Table} from '../components/Table'
+import {Table} from '../components/Table/Table'
 
 export default function Home(){
     const [data,setData]=useState([])

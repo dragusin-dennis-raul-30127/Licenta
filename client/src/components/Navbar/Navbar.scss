@@ -1,0 +1,59 @@
+.wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 45px;
+    width: 100%;
+    background-color: aqua;
+    color: white;
+
+    .left-side{
+        display: flex;
+        flex-direction: row;
+        gap:10px;
+        padding-top:8px ;
+        padding-bottom:8px ;
+        font-size:20px;
+        font-weight: 800;
+        padding-left: 8px;
+        
+        .logo-details{
+            cursor:pointer;
+        }
+        .title-details{
+            cursor:pointer;
+        }
+    }
+    .right-side{
+        
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap:10px;
+        padding-top:8px ;
+        padding-bottom:8px ;
+
+        .user-details{
+            font-size:20px;
+            font-weight: 800;
+            padding-right: 8px;
+            padding-bottom: 4px;
+        }
+        
+        
+    }
+    
+    
+}
+.button-details{
+            padding:4px 8px 4px 8px;
+            background-color: inherit ;
+            border:0px;
+            font-weight: 600;
+            font-size: 16px;
+            color: white;
+            cursor:pointer;
+
+        }
+
