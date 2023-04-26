@@ -36,30 +36,36 @@ app.post('/api/register',async (req,res)=>{
 
 app.post('/api/login',async (req,res)=>{
     
-    
-        const user=await User.findOne({
-            email: req.body.email,
-            
-        })
-        if(!user){
-            return { status: 'error', error: 'Invalid User'}
+        try{
+            const user=await User.findOne({
+                email: req.body.email,
+                
+            })
+            console.log(user);
+            if(!user){
+              throw new Error("user not found")
+            }
+            const isPasswordValid = await bcrypt.compare(req.body.password, user.password)
+            if(isPasswordValid){
+                const token=jwt.sign(
+                    {
+                        name: user.name,
+                        email: user.email,
+                        badgeNumber: user.badgeNumber,
+                        isAdmin: user.isAdmin
+                    },
+                    'secret123'
+                )
+                res.json({status: 'ok', user: token})
+            }
+            // else{
+            //     res.json({status: 'error', user: false})
+            // } 
         }
-        const isPasswordValid = await bcrypt.compare(req.body.password, user.password)
-        if(isPasswordValid){
-            const token=jwt.sign(
-                {
-                    name: user.name,
-                    email: user.email,
-                    badgeNumber: user.badgeNumber,
-                    isAdmin: user.isAdmin
-                },
-                'secret123'
-            )
-            res.json({status: 'ok', user: token})
+        catch(err){
+            res.json(err)
         }
-        else{
-            res.json({status: 'error', user: false})
-        } 
+        
 })
 app.delete('/api/login',async(req,res)=>{
     try{

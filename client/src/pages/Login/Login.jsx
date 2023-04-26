@@ -1,6 +1,7 @@
 //import logo from './logo.svg';
 
 import {useState} from 'react'
+import './Login.scss'
 
 function App() {
   
@@ -9,7 +10,8 @@ function App() {
 
   async function loginUser(event){
     event.preventDefault()
-    const response = await fetch('http://localhost:1337/api/login',{
+    try{
+      const response = await fetch('http://localhost:1337/api/login',{
       method: 'POST',
       headers:{
         'Content-Type': 'application/json',
@@ -21,6 +23,7 @@ function App() {
     })
 
     const data=await response.json()
+    console.log(data)
 
     if(data.user){
       localStorage.setItem('token',data.user)
@@ -29,29 +32,36 @@ function App() {
     }else{
       alert('Please check your username and password')
     }
+    }
+    catch(err){
+      console.log(err)
+    }
    
   }
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={loginUser}>
-        <input 
+    <div className="login-container">
+      <h1 className="title-container">Login</h1>
+    <div className="form-container">
+      <form   onSubmit={loginUser}>
+        <input className="input-details"
           value={email}
           onChange={(e)=>setEmail(e.target.value)}
           type ="text" 
           placeholder="Email"
         />
         <br/>
-        <input 
+        <input className="input-details"
           value={password}
           onChange={(e)=>setPassword(e.target.value)}
           type ="text" 
           placeholder="Password"
         />
-        <br />
-        <input type="submit" value="Login"/>
+        <br/>
+        <input  className="submit-details" type="submit" value="Login"
+        />
       </form>
+      </div>
     </div>
   );
 }

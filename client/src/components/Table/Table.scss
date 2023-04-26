@@ -1,16 +1,22 @@
+.table-container{
+    padding-top: 50px;
+}
+
 .header{
-    background-color: blueviolet;
+    background-color: #97F9F9;
     width:100%;
-    color:white;
+    color:#170312;
 
     .cell-details{
         padding:4px;
+        border-radius: 5px;
     }
 }
 .body{
-    background-color: burlywood;
+    background-color:#170312;
     width:100%;
     color:white;
+    
 
     .body-cell-details {
         padding:10px;

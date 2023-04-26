@@ -3,8 +3,8 @@ import jwt from 'jsonwebtoken'
 import { useNavigate } from 'react-router-dom'
 import {useMemo} from 'react'
 import {GoogleMap, useLoadScript, Marker, MarkerF,InfoWindowF} from '@react-google-maps/api'
-import axios from '../api/axios';
-
+import axios from '../../api/axios';
+import "./Dashboard.scss"
 
 
 
@@ -64,9 +64,11 @@ export default function Home(){
     if(!isLoaded) {
         return <div>Loading...</div>
     }
-    return <div>
-        <button onClick={()=>setData(trucksBorders)}>Trucks</button>
-        <button onClick={()=>setData(carsBorders)}> Cars </button>
+    return <div >
+      <div className="button-container">
+        <button className="select-button-details" onClick={()=>setData(trucksBorders)}>Trucks</button>
+        <button className="select-button-details" onClick={()=>setData(carsBorders)}> Cars </button>
+        </div>
                 <Map  data={data}/>
              </div>
         
@@ -78,10 +80,10 @@ function Map({data}){
     const [showInfoWindow, setInfoWindowFlag] = useState(true);
     const navigate = useNavigate()
     return (
-        <GoogleMap 
+        <div className="map-details"><GoogleMap 
         zoom={7} 
         center={center} 
-        mapContainerStyle={{width: "100%" , height: "100vh"}}>
+        mapContainerStyle={{width: "100%" , height: "85vh",borderRadius: "10px"}}>
         
         {data.map(element => {
           return (
@@ -101,7 +103,9 @@ function Map({data}){
           );
         })}
         {selectedElement ? (
+          <div >
           <InfoWindowF
+            
             position={{lat:selectedElement.latitude, lng:selectedElement.longitude}}
             visible={showInfoWindow}
             marker={activeMarker}
@@ -109,16 +113,17 @@ function Map({data}){
               setSelectedElement(null);
             }}
           >
-            <div>
-              <h1>{selectedElement.name}</h1>
-              <button onClick={()=>navigate('/truckControls')}>Enter Truck Control</button>
-              <button onClick={()=>navigate('/carControls')}>Enter Car Control</button>
-              <button onClick={()=>navigate(`/viewTruckControls/${selectedElement._id}`)}>View Truck Controls</button>
-              <button onClick={()=>navigate(`/viewControls/${selectedElement._id}`)}>View Car Controls</button>
+            <div >
+              <h1 className="info-window-container">{selectedElement.name}</h1>
+                <div clasName="map-button-container">
+                  <button className="map-button-details" onClick={()=>navigate(`/viewTruckControls/${selectedElement._id}`)}>View Truck Controls</button>
+                  <button className="map-button-details" onClick={()=>navigate(`/viewControls/${selectedElement._id}`)}>View Car Controls</button>
+                </div>
             </div>
           </InfoWindowF>
+          </div>
         ) : null}      
-        </GoogleMap>
+        </GoogleMap></div>
     )
 }
 

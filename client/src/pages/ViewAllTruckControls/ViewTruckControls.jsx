@@ -1,29 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import jwt from 'jsonwebtoken'
-import axios from '../api/axios';
+import axios from '../../api/axios';
 
 import { useNavigate } from 'react-router-dom'
 import {useMemo} from 'react'
-import {Table} from '../components/Table/Table'
+import {Table} from '../../components/Table/Table'
+import "./ViewTruckControls.scss"
 
 export default function Home(){
     const [data,setData]=useState([])
-    const [carControls,setCarControls]=useState([])
+    const [truckControls,setTruckControls]=useState([])
 
     
     const navigate = useNavigate()
-    const fetchCarControls=async()=>{
+    const fetchTruckControls=async()=>{
         try{
-            const response = await axios().get("api/carControls")
+            const response = await axios().get("api/truckControls")
             
             console.log(response.data.data)
-            await setCarControls(response.data.data)
+            await setTruckControls(response.data.data)
         }
         catch(error){}
     }
 
    useEffect(()=>{
-        fetchCarControls()
+        fetchTruckControls()
    },[])
 
   
@@ -33,18 +34,18 @@ export default function Home(){
             const user =jwt.decode(token)
             if(!user){
                 localStorage.removeItem('token')
-                navigate('/login')
+                navigate('/')
             } 
         }
         else{
           alert('N ai voie')
-          navigate('/login')
+          navigate('/')
         }
         
     })
     
 
-    const carControlsData=useMemo(()=> carControls,[carControls]);
+    const truckControlsData=useMemo(()=> truckControls,[truckControls]);
     
     const columns=useMemo(()=> [
         {
@@ -76,6 +77,18 @@ export default function Home(){
             accessor: "date"
         },
         {
+            Header: "Weight (Tons)" , 
+            accessor: "weight"
+        },
+        {
+            Header: "Height (Meters)" , 
+            accessor: "height"
+        },
+        {
+            Header: "Width (Meters)" , 
+            accessor: "width"
+        },
+        {
             Header: "Problems" , 
             accessor: "problems"
         },
@@ -85,12 +98,12 @@ export default function Home(){
         },
     ],[])
     
-    return(
-        <div>
-            {carControls.length > 0 &&(
-                <Table data ={carControls} columns ={columns} />
-            )}
-
+    return <div className="wrapper-truck-control">
+    {
+       truckControls.length>0  &&  <div className="positioning-truck">
+        <Table data={truckControls} columns={columns}/>
         </div>
-    );
+    }
+   
+    </div> 
 }

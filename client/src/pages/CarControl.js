@@ -66,14 +66,14 @@ function App() {
         const user =jwt.decode(token)
         if(!user){
             localStorage.removeItem('token')
-            navigate('/login')
+            navigate('/')
         } else{
             enterCarControl()
         }
     }
     else{
       alert('N ai voie')
-      navigate('/login')
+      navigate('/')
     }
     
 })

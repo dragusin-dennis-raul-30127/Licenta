@@ -30,7 +30,7 @@ function App() {
     const data=await response.json()
 
     if(data.status === 'ok') {
-      history('/login')
+      history('/')
     }
     console.log(data)
   }

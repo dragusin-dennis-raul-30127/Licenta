@@ -30,7 +30,8 @@ export const Navbar = ()=>{
                     Enter Truck Control
                 </button>
                 <div className="user-details">
-                    User
+                     User
+
                 </div>
             </div>
         </div>

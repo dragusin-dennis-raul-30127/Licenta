@@ -8,7 +8,7 @@ export const Table = ({columns: columns, data: data}) => {
     useTable({ columns, data });
 
     return(
-        <table {...getTableProps()}>
+        <table className="table-container" {...getTableProps()}>
                 <thead className="header">
                     {headerGroups.map((headerGroup)=>(
                         <tr {...headerGroup.getHeaderGroupProps()}>
