@@ -96,7 +96,7 @@ export const ViewTruckControlByBorder=()=>{
     },
 ],[])
 
-    return <div className="wrapper-truck-control"><div>{border && border.name}</div>
+    return <div className="wrapper-truck-control"><div className="border-details-trucks">{border && border.name}</div>
     {
        truckControl.length>0  &&  <div className="positioning-truck">
         <Table data={truckControl} columns={columns}/>

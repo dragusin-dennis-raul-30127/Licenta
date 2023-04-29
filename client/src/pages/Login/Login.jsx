@@ -44,22 +44,28 @@ function App() {
       <h1 className="title-container">Login</h1>
     <div className="form-container">
       <form   onSubmit={loginUser}>
-        <input className="input-details"
-          value={email}
-          onChange={(e)=>setEmail(e.target.value)}
-          type ="text" 
-          placeholder="Email"
-        />
-        <br/>
-        <input className="input-details"
-          value={password}
-          onChange={(e)=>setPassword(e.target.value)}
-          type ="text" 
-          placeholder="Password"
-        />
-        <br/>
-        <input  className="submit-details" type="submit" value="Login"
-        />
+        <div>
+          <input className="input-details"
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
+            type ="text" 
+            placeholder="Email"
+          />
+        </div>
+          <div>
+            <input className="input-details"
+              value={password}
+              onChange={(e)=>setPassword(e.target.value)}
+              type ="text" 
+              placeholder="Password"
+            />
+          </div>
+            <div>
+              <input  className="submit-details" type="submit" value="Login"/>
+        
+            </div>
+        
+        
       </form>
       </div>
     </div>

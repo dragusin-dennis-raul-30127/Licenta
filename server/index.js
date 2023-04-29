@@ -67,9 +67,20 @@ app.post('/api/login',async (req,res)=>{
         }
         
 })
+
+app.get('/api/login',async(req,res)=>{
+    try{
+        const user = await User.find()
+        return res.json({status: 'ok',data: user})
+    }catch (err){
+        console.log(err)
+        res.json({status:err.status,error: err.message})
+    }
+})
+
 app.delete('/api/login',async(req,res)=>{
     try{
-        const user=await User.deleteOne({email:req.body.email})
+        const user=await User.deleteOne({email:req.body.badgeNumber})
         return res.json({status: 'ok',message:'User deleted'})
     }catch (err){
         console.log(err)

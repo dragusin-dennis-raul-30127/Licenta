@@ -84,7 +84,7 @@ export const ViewCarControlByBorder=()=>{
     },
 ],[])
 
-    return <div className="wrapper-car-control"><div>{border && border.name}</div>
+    return <div className="wrapper-car-control"><div className="border-details">{border && border.name}</div>
     {
        carControl.length>0  &&  <div className="positioning">
         <Table data={carControl} columns={columns}/>
