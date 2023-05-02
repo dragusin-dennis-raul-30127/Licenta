@@ -78,9 +78,10 @@ app.get('/api/login',async(req,res)=>{
     }
 })
 
-app.delete('/api/login',async(req,res)=>{
+
+app.delete('/api/deleteUser/:badge',async(req,res)=>{
     try{
-        const user=await User.deleteOne({email:req.body.badgeNumber})
+        const user=await User.deleteOne({badgeNumber:req.params.badge})
         return res.json({status: 'ok',message:'User deleted'})
     }catch (err){
         console.log(err)

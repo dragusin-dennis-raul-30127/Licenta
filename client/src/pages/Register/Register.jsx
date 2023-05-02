@@ -1,6 +1,6 @@
 //import logo from './logo.svg';
 
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import './Register.scss'
 
@@ -35,6 +35,10 @@ function App() {
     }
     console.log(data)
   }
+
+  useEffect(()=>{
+    console.log(isAdmin)
+  },[isAdmin])
 
   return (
     <div className="wrapper-register">
@@ -89,7 +93,7 @@ function App() {
                       <div>
                         <input className="input-details"
                           value={isAdmin}
-                          onChange={(e)=>setIsAdmin(e.target.value)}
+                          onChange={()=>setIsAdmin(!(isAdmin))}
                           type ="checkBox" 
                 
                         />
