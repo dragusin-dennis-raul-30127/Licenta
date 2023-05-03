@@ -70,28 +70,28 @@ console.log(user)
                 <div className="fixed top-16 w-56 text-right">
       <Menu as="div" className="dropdown">
         <div>
-          <Menu.Button className="dropdwon-button">
+          <Menu.Button className="dropdown-button">
             <Icon icon ={ICONS.USER_ICON}></Icon>
           </Menu.Button>
         </div>
           <Menu.Items className="dropdown-items">
             <div className="dropdown-items-wrapper ">
-              <div>
+              <div className="dropdown-user-name">
                 {user.name}
               </div>
               {(user.isAdmin) && 
               <div>
-                <button onClick={()=>viewUsers()}>
+                <button className="dropdown-items-details" onClick={()=>viewUsers()}>
                     View Users
                 </button>
               </div>}
                 <div>
-                    <button onClick={()=>registerUsers()}>
+                    <button className="dropdown-items-details" onClick={()=>registerUsers()}>
                         Register User
                     </button>
                 </div>
                     <div>
-                        <button onClick={()=>navigate("/deleteUsers")}>
+                        <button className="dropdown-items-details" onClick={()=>navigate("/deleteUsers")}>
                             Delete User
                         </button>
                     </div>

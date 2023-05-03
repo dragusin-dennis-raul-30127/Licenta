@@ -56,7 +56,7 @@ function App() {
             <input className="input-details"
               value={password}
               onChange={(e)=>setPassword(e.target.value)}
-              type ="text" 
+              type ="password" 
               placeholder="Password"
             />
           </div>

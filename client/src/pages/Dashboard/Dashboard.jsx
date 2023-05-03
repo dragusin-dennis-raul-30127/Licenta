@@ -31,12 +31,12 @@ export default function Home(){
             const user =jwt.decode(token)
             if(!user){
                 localStorage.removeItem('token')
-                navigate('/login')
+                navigate('/')
             } 
         }
         else{
           alert('N ai voie')
-          navigate('/login')
+          navigate('/')
         }
         
     })

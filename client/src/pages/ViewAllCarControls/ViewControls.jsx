@@ -86,7 +86,7 @@ export default function Home(){
         },
     ],[])
     
-    return <div className="wrapper-car-control">
+    return <div className="wrapper-car-control"><div className="title-details-view-car">All Car Controls</div>
     {
        carControls.length>0  &&  <div className="positioning">
         <Table data={carControls} columns={columns}/>
