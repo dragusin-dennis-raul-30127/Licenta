@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import jwt from 'jsonwebtoken'
 import axios from '../../api/axios';
 
 import { useNavigate } from 'react-router-dom'
@@ -29,19 +28,10 @@ export default function Home(){
 
   
     useEffect(() => {
-        const token=localStorage.getItem('token')
-        if (token) {
-            const user =jwt.decode(token)
-            if(!user){
-                localStorage.removeItem('token')
-                navigate('/')
-            } 
+        if (!localStorage.getItem('token')) {
+            alert('N ai voie')
+            navigate('/')
         }
-        else{
-          alert('N ai voie')
-          navigate('/')
-        }
-        
     })
     
 
@@ -63,6 +53,10 @@ export default function Home(){
         {
             Header: "VIN Number" , 
             accessor: "vinNumber"
+        },
+        {
+            Header: "Entering/Exiting" , 
+            accessor: "isEntering"
         },
         {
             Header: "Vehicle Model" , 
@@ -88,6 +82,11 @@ export default function Home(){
             Header: "Width (Meters)" , 
             accessor: "width"
         },
+        {
+            Header: "Length (Meters)" , 
+            accessor: "length"
+        },
+
         {
             Header: "Problems" , 
             accessor: "problems"

@@ -9,10 +9,13 @@ const truckControls=require('./models/truckControls')
 const jwt =require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
+const SECRET = 'djfwekht#$^&$#@';
+
 app.use(cors())
 app.use(express.json())
 
-mongoose.connect('mongodb://localhost:27017/Licenta')
+//mongoose.connect('mongodb://root:root@localhost:27017/?authMechanism=DEFAULT')
+mongoose.connect('mongodb+srv://root:root@licenta.prsbw6n.mongodb.net/?retryWrites=true&w=majority')
 
 app.post('/api/register',async (req,res)=>{
     console.log(req.body)
@@ -42,6 +45,14 @@ app.post('/api/login',async (req,res)=>{
                 
             })
             console.log(user);
+
+            if (!user) {
+                res.status(400).send({
+                    message: 'Username or password were incorrect'
+                });
+                return;
+            }
+
             if(!user){
               throw new Error("user not found")
             }
@@ -54,7 +65,7 @@ app.post('/api/login',async (req,res)=>{
                         badgeNumber: user.badgeNumber,
                         isAdmin: user.isAdmin
                     },
-                    'secret123'
+                    SECRET
                 )
                 res.json({status: 'ok', user: token})
             }
@@ -68,10 +79,26 @@ app.post('/api/login',async (req,res)=>{
         
 })
 
-app.get('/api/login',async(req,res)=>{
+const secureMiddleware = (req, res, next) => {
+    const token = req.headers.authorization.split(' ')[1];
+
+    
+
+    try {
+        jwt.verify(token, SECRET)
+    }
+    catch (e) {
+        res.status(401).json({ message: 'You are not authorized' });
+        return;
+    }
+    
+    next();
+}
+
+app.get('/api/login',secureMiddleware,async(req,res)=>{
     try{
         const user = await User.find()
-        return res.json({status: 'ok',data: user})
+        return res.json({status: 'ok', data: user})
     }catch (err){
         console.log(err)
         res.json({status:err.status,error: err.message})
@@ -79,7 +106,8 @@ app.get('/api/login',async(req,res)=>{
 })
 
 
-app.delete('/api/deleteUser/:badge',async(req,res)=>{
+
+app.delete('/api/deleteUser/:badge', secureMiddleware, async(req,res)=>{
     try{
         const user=await User.deleteOne({badgeNumber:req.params.badge})
         return res.json({status: 'ok',message:'User deleted'})
@@ -110,7 +138,7 @@ app.post('/api/borders',async (req,res)=>{
     
 })
 
-app.get('/api/borders',async(req,res)=>{
+app.get('/api/borders',secureMiddleware,async(req,res)=>{
     try{
         const border = await borders.find()
         return res.json({status: 'ok',data: border})
@@ -120,7 +148,7 @@ app.get('/api/borders',async(req,res)=>{
     }
 })
 
-app.get('/api/borders/:id', async (req, res) => {
+app.get('/api/borders/:id',secureMiddleware, async (req, res) => {
     try {
       const border = await borders.findOne({ _id: req.params.id });
       return res.json({ status: 'ok', data: border });
@@ -164,7 +192,7 @@ app.post('/api/carControls',async (req,res)=>{
         res.send(401,'Unauthorized request')
     }
     const token=authHeader.split(' ')[1] 
-    const decoded=jwt.verify(token,'secret123')
+    const decoded=jwt.verify(token,SECRET)
     try{
         
         
@@ -173,6 +201,7 @@ app.post('/api/carControls',async (req,res)=>{
             name:req.body.name,
             licensePlate:req.body.licensePlate,
             vinNumber:req.body.vinNumber,
+            isEntering:req.body.isEntering,
             vehicleModel:req.body.vehicleModel,
             vehicleYear:req.body.vehicleYear,
             problems:req.body.problems,
@@ -187,7 +216,7 @@ app.post('/api/carControls',async (req,res)=>{
     
 })
 
-app.get('/api/carControls',async(req,res)=>{
+app.get('/api/carControls', secureMiddleware,async(req,res)=>{
     try{
         const carControl = await carControls.find()
         console.log("mere")
@@ -198,7 +227,7 @@ app.get('/api/carControls',async(req,res)=>{
     }
 })
 
-app.get('/api/carControls/:border', async (req, res) => {
+app.get('/api/carControls/:border',secureMiddleware, async (req, res) => {
     try {
       const carControl = await carControls.find({ border: req.params.border });
       return res.json({ status: 'ok', data: carControl });
@@ -225,6 +254,7 @@ app.put('/api/carControls',async(req,res)=>{
                 name:req.body.name,
                 licensePlate:req.body.licensePlate,
                 vinNumber:req.body.vinNumber,
+                isEntering:req.body.isEntering,
                 vehicleModel:req.body.vehicleModel,
                 vehicleYear:req.body.vehicleYear,
                 date:req.body.date,
@@ -252,7 +282,7 @@ app.delete('/api/carControls',async(req,res)=>{
 
 
 
-app.post('/api/truckControls',async (req,res)=>{
+app.post('/api/truckControls',secureMiddleware, async (req,res)=>{
     console.log(req.body)
     try{
         const truckControl=await truckControls.create({
@@ -260,6 +290,7 @@ app.post('/api/truckControls',async (req,res)=>{
                 name:req.body.name,
                 licensePlate:req.body.licensePlate,
                 vinNumber:req.body.vinNumber,
+                isEntering:req.body.isEntering,
                 vehicleModel:req.body.vehicleModel,
                 vehicleYear:req.body.vehicleYear,
                 weight:req.body.weight,
@@ -278,7 +309,7 @@ app.post('/api/truckControls',async (req,res)=>{
     
 })
 
-app.get('/api/truckControls',async(req,res)=>{
+app.get('/api/truckControls',secureMiddleware, async(req,res)=>{
     try{
         const truckControl = await truckControls.find()
         return res.json({status: 'ok',data: truckControl})
@@ -288,7 +319,7 @@ app.get('/api/truckControls',async(req,res)=>{
     }
 })
 
-app.get('/api/truckControls/:border', async (req, res) => {
+app.get('/api/truckControls/:border',secureMiddleware, async (req, res) => {
     try {
       const truckControl = await truckControls.find({ border: req.params.border });
       return res.json({ status: 'ok', data: truckControl });
@@ -314,6 +345,7 @@ app.put('/api/truckControls',async(req,res)=>{
                 name:req.body.name,
                 licensePlate:req.body.licensePlate,
                 vinNumber:req.body.vinNumber,
+                isEntering:req.body.isEntering,
                 vehicleModel:req.body.vehicleModel,
                 vehicleYear:req.body.vehicleYear,
                 date:req.body.date,

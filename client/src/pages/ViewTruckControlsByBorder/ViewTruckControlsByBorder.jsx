@@ -63,6 +63,10 @@ export const ViewTruckControlByBorder=()=>{
         accessor: "vinNumber"
     },
     {
+        Header: "Entering/Exiting" , 
+        accessor: "isEntering"
+    },
+    {
         Header: "Vehicle Model" , 
         accessor: "vehicleModel"
     },
@@ -85,6 +89,10 @@ export const ViewTruckControlByBorder=()=>{
     {
         Header: "Width (Meters)" , 
         accessor: "width"
+    },
+    {
+        Header: "Length (Meters)" , 
+        accessor: "length"
     },
     {
         Header: "Problems" , 

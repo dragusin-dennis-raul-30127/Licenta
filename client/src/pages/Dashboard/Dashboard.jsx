@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import jwt from 'jsonwebtoken'
 import { useNavigate } from 'react-router-dom'
 import {useMemo} from 'react'
 import {GoogleMap, useLoadScript, Marker, MarkerF,InfoWindowF} from '@react-google-maps/api'
@@ -26,19 +25,10 @@ export default function Home(){
 
   
     useEffect(() => {
-        const token=localStorage.getItem('token')
-        if (token) {
-            const user =jwt.decode(token)
-            if(!user){
-                localStorage.removeItem('token')
-                navigate('/')
-            } 
-        }
-        else{
+        if (!localStorage.getItem('token')) {
           alert('N ai voie')
           navigate('/')
         }
-        
     })
    
 

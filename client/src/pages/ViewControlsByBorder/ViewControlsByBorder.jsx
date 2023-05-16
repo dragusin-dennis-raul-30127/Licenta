@@ -63,6 +63,10 @@ export const ViewCarControlByBorder=()=>{
         accessor: "vinNumber"
     },
     {
+        Header: "Entering/Exiting" , 
+        accessor: "isEntering"
+    },
+    {
         Header: "Vehicle Model" , 
         accessor: "vehicleModel"
     },

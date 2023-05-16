@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import jwt from 'jsonwebtoken'
 import axios from '../../api/axios';
 
 import { useNavigate } from 'react-router-dom'
@@ -29,19 +28,10 @@ export default function Home(){
 
   
     useEffect(() => {
-        const token=localStorage.getItem('token')
-        if (token) {
-            const user =jwt.decode(token)
-            if(!user){
-                localStorage.removeItem('token')
-                navigate('/')
-            } 
+        if (!localStorage.getItem('token')) {
+            alert('N ai voie')
+            navigate('/')
         }
-        else{
-          alert('N ai voie')
-          navigate('/')
-        }
-        
     })
     
 

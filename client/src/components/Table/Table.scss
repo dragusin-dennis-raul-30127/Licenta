@@ -1,28 +1,18 @@
-.table-container{
+.table-container {
     padding-top: 50px;
-}
+    text-align: center;
 
-.header{
-    background-color: #97F9F9;
-    width:100%;
-    color:#170312;
-
-    .cell-details{
-        padding:4px;
-        border-radius: 5px;
+    th,
+    td {
+        padding: 10px;
     }
-}
-.body{
-    background-color:#170312;
-    width:100%;
-    color:white;
-    
 
-    .body-cell-details {
-        padding:10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    th {
+        background-color: #97F9F9;
+        border-radius: 10px;
     }
-    
+
+    td {
+        color: white;
+    }
 }

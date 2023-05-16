@@ -6,6 +6,7 @@ const truckControls = new mongoose.Schema(
     name:{ type: String,required: true },
     licensePlate:{ type: String,required: true ,unique: true},
     vinNumber:{ type: String,required: true,unique: true},
+    isEntering:{ type: Boolean,required: true},
     vehicleModel:{ type: String,required: true },
     vehicleYear:{ type: Number,required: true },
     date:{type: Date,required: true,default: Date.now()},

@@ -18,9 +18,15 @@
         padding-left: 8px;
         justify-content: center;
         align-items: center;
+        line-height: 1;
         
         .logo-details{
-            cursor:pointer;
+            cursor: pointer;
+
+            img {
+                width: 40px;
+                height: 40px;
+            }
         }
         .title-details{
             cursor:pointer;

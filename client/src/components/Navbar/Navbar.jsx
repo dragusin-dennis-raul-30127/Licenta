@@ -34,7 +34,7 @@ console.log(user)
         <div className="wrapper">
             <div className="left-side">
                 <div onClick={()=>navigate('/dashboard')} className="logo-details">
-                    Logo
+                    <img src="border-control.svg" />
                 </div>
                 <div onClick={()=>navigate('/dashboard')} className="title-details">
                     Border Control
