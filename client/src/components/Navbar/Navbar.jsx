@@ -85,16 +85,18 @@ console.log(user)
                     View Users
                 </button>
               </div>}
+              {(user.isAdmin) && 
                 <div>
                     <button className="dropdown-items-details" onClick={()=>registerUsers()}>
                         Register User
                     </button>
-                </div>
+                </div>}
+                {(user.isAdmin) && 
                     <div>
                         <button className="dropdown-items-details" onClick={()=>navigate("/deleteUsers")}>
                             Delete User
                         </button>
-                    </div>
+                    </div>}
                         <div>
                             <button className="dropdown-items-details" onClick={()=>logout()}>
                                 Logout

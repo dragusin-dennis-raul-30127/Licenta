@@ -66,7 +66,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (!token) {
-      alert('N ai voie')
+      alert('You must login first!')
       navigate('/')
 
     }

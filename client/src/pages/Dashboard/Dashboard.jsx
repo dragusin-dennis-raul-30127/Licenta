@@ -26,7 +26,7 @@ export default function Home(){
   
     useEffect(() => {
         if (!localStorage.getItem('token')) {
-          alert('N ai voie')
+          alert('You must login first!')
           navigate('/')
         }
     })
