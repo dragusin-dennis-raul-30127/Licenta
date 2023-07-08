@@ -40,18 +40,7 @@ export const Table = ({ columns: columns, data: data }) => {
                 ))}
 
             </thead>
-            {/* <tbody className="body"{...getTableBodyProps()}>
-                {rows.map((row) => {
-                    prepareRow(row);
-                    return (
-                        <tr {...row.getRowProps()}>
-                            {row.cells.map((cell) => (
-                                <td classname="body-cell-details" style={{ padding: "4px" }} {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                            ))}
-                        </tr>
-                    );
-                })}
-            </tbody> */}
+            
             <tbody className="body">
                 {data.map(row => {
                     return (

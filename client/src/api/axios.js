@@ -14,7 +14,7 @@ const defaultHeaders = {
 };
 
 const defaultConfig = {
-  baseURL: "http://localhost:1337/",
+  baseURL: /*"http://localhost:1337/"*/"licenta-z58q.vercel.app",
   headers: defaultHeaders,
 };
 
